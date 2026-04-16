@@ -85,9 +85,7 @@ export default function LoginPage() {
             <a href="#" className="text-sm text-[#1d50a5] hover:underline">Forgot Password?</a>
           </div>
 
-          <button
-            onClick={handleLogin}
-            className="w-full text-white py-3 rounded-lg text-base font-medium bg-blue-600 shadow-[0_4px_14px_0_rgba(59,130,246,0.5)]">Sign In</button>
+          <button type="submit" className="w-full text-white py-3 rounded-lg text-base font-medium bg-blue-600 shadow-[0_4px_14px_0_rgba(59,130,246,0.5)]">Sign In</button>
         </div>
       </div>
 

@@ -17,6 +17,57 @@ const statusStyles = {
   Rejected: "bg-red-100 text-red-500",
 };
 
+const cards = [
+  {
+    label: "Total Invoice Submitted",
+    value: "140",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Successfully Signed",
+    value: "120",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="18" rx="2"/>
+        <path d="M8 10h8"/>
+        <path d="M8 14h4"/>
+        <path d="M14 14l2 2 4-4"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Failed",
+    value: "20",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 16V4m0 0L3 8m4-4l4 4"/>
+        <path d="M17 8v12m0 0l4-4m-4 4l-4-4"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Success Rate",
+    value: "78%",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+      </svg>
+    ),
+  },
+];
+
 export default function DashboardPage() {
   const [search, setSearch] = useState("");
 
@@ -66,15 +117,10 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-4 gap-6 mb-8">
-          {[
-            { label: "Total Invoice Submitted", value: "140", icon: "" },
-            { label: "Successfully Signed", value: "120", icon: "" },
-            { label: "Failed", value: "20", icon: "" },
-            { label: "Success Rate", value: "78%", icon: "" },
-          ].map((card) => (
+          {cards.map((card) => (
             <div key={card.label} className="bg-white rounded-xl p-6 border border-gray-100 shadow-md">
-              <div className="flex items-center gap-2 text-blue-500 text-sm mb-4">
-                <span>{card.icon}</span>
+              <div className="flex items-center gap-2 text-sm mb-4">
+                {card.icon}
                 <span className="text-gray-900">{card.label}</span>
               </div>
               <p className="text-3xl font-bold text-gray-900">{card.value}</p>
@@ -125,7 +171,7 @@ export default function DashboardPage() {
 
           <table className="w-full text-sm">
             <thead>
-                <tr className="text-left text-gray-500 border-b border-gray-200">
+              <tr className="text-left text-gray-500 border-b border-gray-200">
                 <th className="pb-3 font-medium">IRN</th>
                 <th className="pb-3 font-medium">Payment Status</th>
                 <th className="pb-3 font-medium">Invoice Type</th>
@@ -133,7 +179,7 @@ export default function DashboardPage() {
                 <th className="pb-3 font-medium">Date Issued</th>
                 <th className="pb-3 font-medium">Status</th>
                 <th className="pb-3 font-medium">Action</th>
-                </tr>
+              </tr>
             </thead>
             <tbody>
               {filtered.map((inv, i) => (

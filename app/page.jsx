@@ -15,19 +15,11 @@ export default function LoginPage() {
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-1 w-full relative">
 
-        <img
-          src="/image.jpg"
-          alt="background"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <img src="/image.jpg" alt="background" className="absolute inset-0 w-full h-full object-cover"/>
 
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-white/95" />
 
-        <img
-          src="/logo.png"
-          alt="eTranzact"
-          className="absolute top-6 left-6 h-30 z-10"
-        />
+        <img src="/logo.png" alt="eTranzact" className="absolute top-6 left-6 h-30 z-10"/>
 
         <div className="relative z-10 w-full max-w-lg flex flex-col justify-center px-10 h-screen ml-auto mr-20">
           
@@ -56,12 +48,9 @@ export default function LoginPage() {
             placeholder="Enter email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-3 mb-4 text-sm outline-none focus:border-blue-500 bg-white/90"
-          />
+            className="border border-gray-300 rounded-lg px-4 py-3 mb-4 text-sm outline-none focus:border-blue-500 bg-white/90"/>
 
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Password
-          </label>
+          <label className="text-sm font-medium text-gray-700 mb-1">Password</label>
 
           <div className="relative mb-2">
             <input
@@ -93,17 +82,12 @@ export default function LoginPage() {
           </div>
 
           <div className="text-right mb-10">
-            <a href="#" className="text-sm text-[#1d50a5] hover:underline">
-              Forgot Password?
-            </a>
+            <a href="#" className="text-sm text-[#1d50a5] hover:underline">Forgot Password?</a>
           </div>
 
           <button
             onClick={handleLogin}
-            className="w-full text-white py-3 rounded-lg text-base font-medium bg-blue-600 shadow-[0_4px_14px_0_rgba(59,130,246,0.5)]"
-          >
-            Sign In
-          </button>
+            className="w-full text-white py-3 rounded-lg text-base font-medium bg-blue-600 shadow-[0_4px_14px_0_rgba(59,130,246,0.5)]">Sign In</button>
         </div>
       </div>
 

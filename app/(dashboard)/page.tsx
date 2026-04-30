@@ -1,7 +1,24 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-const invoices = [
+type Invoice = {
+  irn: string;
+  payment: string;
+  type: string;
+  sign: string;
+  date: string;
+  time: string;
+  status: "Paid" | "Pending" | "Rejected";
+};
+
+type Card = {
+  label: string;
+  value: string;
+  icon: React.ReactNode;
+};
+
+const invoices: Invoice[] = [
   { irn: "28934728349284EU", payment: "Paid", type: "Bulk", sign: "True", date: "2025-11-04", time: "08:24:45", status: "Paid" },
   { irn: "28934728349284EU", payment: "Paid", type: "Bulk", sign: "False", date: "2025-11-04", time: "08:24:45", status: "Paid" },
   { irn: "28934728349284EU", payment: "Paid", type: "Bulk", sign: "False", date: "2025-11-04", time: "08:24:45", status: "Pending" },
@@ -11,13 +28,13 @@ const invoices = [
   { irn: "28934728349284EU", payment: "Paid", type: "Single", sign: "True", date: "2025-11-04", time: "08:24:45", status: "Rejected" },
 ];
 
-const statusStyles = {
+const statusStyles: Record<Invoice["status"], string> = {
   Paid: "bg-green-100 text-green-700",
   Pending: "bg-orange-100 text-orange-500",
   Rejected: "bg-red-100 text-red-500",
 };
 
-const cards = [
+const cards: Card[] = [
   {
     label: "Total Invoice Submitted",
     value: "140",
@@ -69,7 +86,15 @@ const cards = [
 ];
 
 export default function DashboardPage() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [router]);
 
   const filtered = invoices.filter(
     (inv) =>

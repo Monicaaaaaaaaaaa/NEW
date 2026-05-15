@@ -5,6 +5,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Eye, EyeOff } from "@/icons";
+import axios from "axios";
+import HTTP from "@/services/http-client";
 
 type LoginFormValues = {
   email: string;
@@ -28,46 +31,32 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
-  
+
   const onSubmit = async (data: LoginFormValues) => {
-     if (loading) return;
+    if (loading) return;
 
-     setLoading(true);
-     
-     try {
-      const response = await fetch(
-        "/api/auth/login",{
-          method: "POST",
-          headers: {"Content-Type": "application/json",},
-          body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-        }
-     );
-     
-     const result = await response.json();
+    setLoading(true);
 
-    if (!response.ok) {
-      throw new Error(result.message || "Login failed");
+    try {
+      const { data: result } = await HTTP.post("/auth/login", {
+        email: data.email,
+        password: data.password,
+      });
+
+      localStorage.setItem("token", result.data.token);
+      localStorage.setItem("refreshToken", result.data.refreshToken);
+      console.log("Login successful:", result);
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.message || error.message
+        : "An unexpected error occurred";
+      alert(message);
+    } finally {
+      setLoading(false);
     }
-
-    localStorage.setItem("token", result.token);
-    console.log("Login successful:", result);
-    router.push("/dashboard");
-
-  } catch (error) {
-    console.error("Login error:", error);
-    alert(
-      error instanceof Error
-        ? error.message
-        : "An unexpected error occurred"
-    );
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <form
@@ -137,18 +126,7 @@ export default function LoginForm() {
           onClick={() => setShowPassword((prev) => !prev)}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
         >
-          {showPassword ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-              <line x1="1" y1="1" x2="23" y2="23"/>
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-          )}
+          {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
         </button>
       </div>
       {errors.password && (
@@ -162,17 +140,26 @@ export default function LoginForm() {
       </div>
 
       <Button type="submit" disabled={!isValid || isSubmitting} className="w-full">
-  {isSubmitting ? (
-    <span className="flex items-center justify-center gap-2">
-      <svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-      </svg>
-      Signing in...
-    </span>
-  ) : (
-    "Sign In"
-  )}
-</Button>
+        {isSubmitting ? (
+          <span className="flex items-center justify-center gap-2">
+            <svg
+              className="animate-spin"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+            Signing in...
+          </span>
+        ) : (
+          "Sign In"
+        )}
+      </Button>
     </form>
   );
 }

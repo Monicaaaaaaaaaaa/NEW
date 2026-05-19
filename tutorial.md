@@ -20,7 +20,7 @@
 ## PRACTISE
 - create a reusable button
 - add the following properties: variants, rounded, size, fullWidth, isLoading, loadingText, outline variant
-- 
+- setup tailwindcss debug screens
 
  
 

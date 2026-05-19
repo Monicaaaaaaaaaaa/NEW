@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button_2";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "@/icons";
 import axios from "axios";
@@ -74,8 +74,8 @@ export default function LoginForm() {
 
       <p className="text-gray-900 mb-8 text-sm">
         A centralised platform to manage{" "}
-        <strong>Bulk upload and Single Invoice creation</strong>{" "}
-        — all in one place with instant confirmation.
+        <strong>Bulk upload and Single Invoice creation</strong> — all in one
+        place with instant confirmation.
       </p>
 
       <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">
@@ -86,7 +86,9 @@ export default function LoginForm() {
         type="email"
         placeholder="Enter email address"
         className={`rounded-lg px-4 py-3 mb-1 text-sm outline-none ${
-          errors.email ? "border-red-500" : "border-gray-300 focus:border-blue-500"
+          errors.email
+            ? "border-red-500"
+            : "border-gray-300 focus:border-blue-500"
         }`}
         {...register("email", {
           required: "Email is required",
@@ -100,7 +102,10 @@ export default function LoginForm() {
         <p className="text-red-500 text-xs mb-3">{errors.email.message}</p>
       )}
 
-      <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1">
+      <label
+        htmlFor="password"
+        className="text-sm font-medium text-gray-700 mb-1"
+      >
         Password
       </label>
       <div className="relative mb-1">
@@ -110,7 +115,9 @@ export default function LoginForm() {
           placeholder="Enter Password"
           autoComplete="current-password"
           className={`rounded-lg pl-4 pr-10 py-3 w-full text-sm outline-none ${
-            errors.password ? "border-red-500" : "border-gray-300 focus:border-blue-500"
+            errors.password
+              ? "border-red-500"
+              : "border-gray-300 focus:border-blue-500"
           }`}
           {...register("password", {
             required: "Password is required",
@@ -139,7 +146,11 @@ export default function LoginForm() {
         </a>
       </div>
 
-      <Button type="submit" disabled={!isValid || isSubmitting} className="w-full">
+      <Button
+        type="submit"
+        disabled={!isValid || isSubmitting}
+        className="w-full"
+      >
         {isSubmitting ? (
           <span className="flex items-center justify-center gap-2">
             <svg

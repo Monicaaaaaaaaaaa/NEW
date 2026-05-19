@@ -16,10 +16,25 @@
 ## WEEK 4 
 - React-Hook-Forms
 
+
+## PRACTISE
+- create a reusable button
+- add the following properties: variants, rounded, size, fullWidth, isLoading, loadingText, outline variant
+- 
+
  
 
 
 
+## Libraries
+
+- npm install tailwindcss-debug-screens --save-dev
 
 
 
+# NODEJS
+- development, production
+- process.env.NODE_ENV
+
+# staging, QA, LIVE
+npm run build

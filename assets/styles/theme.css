@@ -1,0 +1,24 @@
+
+@theme {
+    --color-primary: #0765FF;
+    --color-success-50: #E7F6EC;
+    --color-success-500: #099137;
+    /*  */
+    --color-danger: #E7000B;
+    --color-danger-100: #FFC9C9;
+    --color-danger-200: #FECACA;
+    --color-danger-300: #DC3C3F;
+    --color-danger-400: #7F1D1D;
+    --color-danger-600: #82181A;
+    --color-danger-700: #991B1B;
+    /*  */
+    --color-warning-50: #FFFAEB;
+    --color-warning-100: #FFFAEB;
+    --color-warning-500: #F79009;
+    --color-warning-400: #894B00;
+
+    /* border radius */
+    --radius-nrs-8: 8px;
+    --radius-nrs-10: 10px;
+    
+}

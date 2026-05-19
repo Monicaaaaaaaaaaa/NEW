@@ -1,0 +1,6 @@
+@layer utilities { 
+    .flex-center {
+        @apply justify-center items-center
+    }
+}
+

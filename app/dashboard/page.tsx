@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import HTTP from "@/services/http-client";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import {
   Users,
   FileCheck,
@@ -22,7 +22,6 @@ import {
   MoreHorizontal,
   RefreshCw,
 } from "@/icons";
-
 
 type ApiInvoice = {
   id: number;
@@ -75,8 +74,7 @@ function deriveStatus(inv: ApiInvoice): Invoice["status"] {
     try {
       const parsed = JSON.parse(inv.signedResponse);
       if (parsed?.success === false) return "Rejected";
-    } catch {
-    }
+    } catch {}
   }
   if (inv.isSigned) return "Paid";
   return "Pending";
@@ -92,7 +90,9 @@ function formatDate(dateStr: string | null): { date: string; time: string } {
 }
 
 function mapApiInvoice(inv: ApiInvoice): Invoice {
-  const { date, time } = formatDate(inv.issueDate || inv.createdAt || inv.signedAt);
+  const { date, time } = formatDate(
+    inv.issueDate || inv.createdAt || inv.signedAt,
+  );
   return {
     irn: inv.irn,
     payment: inv.paymentStatus
@@ -108,7 +108,12 @@ function mapApiInvoice(inv: ApiInvoice): Invoice {
 
 export default function DashboardPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [meta, setMeta] = useState<PaginationMeta>({ page: 1, size: 10, totalElements: 0, totalPages: 1 });
+  const [meta, setMeta] = useState<PaginationMeta>({
+    page: 1,
+    size: 10,
+    totalElements: 0,
+    totalPages: 1,
+  });
   const [search, setSearch] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -182,7 +187,7 @@ export default function DashboardPage() {
     (inv) =>
       inv.irn.toLowerCase().includes(search.toLowerCase()) ||
       inv.type.toLowerCase().includes(search.toLowerCase()) ||
-      inv.status.toLowerCase().includes(search.toLowerCase())
+      inv.status.toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleDownload = async () => {
@@ -201,7 +206,6 @@ export default function DashboardPage() {
     }
   };
 
-
   const handleLogout = async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
@@ -209,9 +213,9 @@ export default function DashboardPage() {
     } catch (err) {
       console.error("Logout error:", err);
     } finally {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-    router.push("/login");
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      router.push("/login");
     }
   };
 
@@ -224,13 +228,18 @@ export default function DashboardPage() {
             <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-medium">
               BP
             </div>
-            <span className="text-sm font-medium text-gray-900">Bright Paul</span>
+            <span className="text-sm font-medium text-gray-900">
+              Bright Paul
+            </span>
           </div>
           <button className="text-gray-400 hover:text-gray-600">
             <Settings size={20} />
           </button>
-          <button onClick={handleLogout} className="text-gray-400 hover:text-gray-600">
-            <LogOut size={20}/>
+          <button
+            onClick={handleLogout}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            <LogOut size={20} />
           </button>
         </div>
       </div>
@@ -238,24 +247,39 @@ export default function DashboardPage() {
       <div className="px-18 py-8">
         <div className="flex items-start justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-blue-600">NRS Invoice Dashboard</h1>
-            <p className="text-sm text-gray-900 mt-1">Manage your NRS e-invoicing compliance</p>
+            <h1 className="text-2xl font-bold text-blue-600">
+              NRS Invoice Dashboard
+            </h1>
+            <p className="text-sm text-gray-900 mt-1">
+              Manage your NRS e-invoicing compliance
+            </p>
           </div>
           <div className="flex items-center gap-3">
-            <button
-            onClick={() => router.push("/users")}
-            className="flex items-center gap-2 border border-blue-600 text-blue-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-50">
-              <Users size={16} /> Users
-            </button>
-            <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium">
-              <Plus size={16} /> Create Invoice
-            </button>
+            <Button
+              title="Users"
+              icon={Users}
+              variant="outline-primary"
+              rounded="lg"
+              onClick={() => router.push("/users")}
+            />
+            <Button
+              title="Create Invoice"
+              icon={Plus}
+              variant="danger"
+              type="button"
+              onClick={() => {}}
+              rounded="lg"
+              size="lg"
+            />
           </div>
         </div>
 
         <div className="grid grid-cols-4 gap-6 mb-8">
           {cards.map((card) => (
-            <div key={card.label} className="bg-white rounded-xl p-6 border border-gray-100 shadow-md">
+            <div
+              key={card.label}
+              className="bg-white rounded-xl p-6 border border-gray-100 shadow-md"
+            >
               <div className="flex items-center gap-2 text-sm mb-4">
                 {card.icon}
                 <span className="text-gray-900">{card.label}</span>
@@ -350,8 +374,13 @@ export default function DashboardPage() {
                 </tr>
               ) : (
                 filtered.map((inv, i) => (
-                  <tr key={i} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-4 text-gray-900 font-mono text-xs">{inv.irn}</td>
+                  <tr
+                    key={i}
+                    className="border-b border-gray-200 hover:bg-gray-50"
+                  >
+                    <td className="py-4 text-gray-900 font-mono text-xs">
+                      {inv.irn}
+                    </td>
                     <td className="py-4 text-gray-900">{inv.payment}</td>
                     <td className="py-4 text-gray-900">{inv.type}</td>
                     <td className="py-4 text-gray-900">{inv.sign}</td>
@@ -361,7 +390,9 @@ export default function DashboardPage() {
                       <span className="text-gray-500 text-xs">{inv.time}</span>
                     </td>
                     <td className="py-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusStyles[inv.status]}`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${statusStyles[inv.status]}`}
+                      >
                         {inv.status}
                       </span>
                     </td>
@@ -378,7 +409,10 @@ export default function DashboardPage() {
 
           <div className="flex items-center justify-between mt-6 text-sm">
             <span className="text-gray-500">
-              Total records: <span className="font-medium text-gray-700">{meta.totalElements}</span>
+              Total records:{" "}
+              <span className="font-medium text-gray-700">
+                {meta.totalElements}
+              </span>
             </span>
             <div className="flex items-center gap-2 text-gray-900">
               <span>Rows per page</span>
@@ -418,12 +452,14 @@ export default function DashboardPage() {
               </button>
               <button
                 disabled={currentPage === meta.totalPages}
-                onClick={() => setCurrentPage((p) => Math.min(meta.totalPages, p + 1))}
+                onClick={() =>
+                  setCurrentPage((p) => Math.min(meta.totalPages, p + 1))
+                }
                 className="p-1 border border-gray-200 rounded text-gray-800 disabled:opacity-40"
               >
                 <ChevronsRight size={10} />
               </button>
-              <button 
+              <button
                 disabled={currentPage === meta.totalPages}
                 onClick={() => setCurrentPage(meta.totalPages)}
                 className="p-1 border border-gray-200 rounded text-gray-800 disabled:opacity-40"

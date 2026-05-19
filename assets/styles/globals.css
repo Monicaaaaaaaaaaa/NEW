@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* 2. Tailwind plugins (like animations) */
+
+/* 3. Base layer: resets, typography, etc. */
+@import "./base.css";
+
+/* 4. Theme tokens and variables (should come early so others can use them) */
+@import "./shadcn.css";
+@import "./theme.css";
+
+/* 5. Component styles (custom or library-based) */
+/* @import "./component.css"; */
+
+/* 6. Utility  or extensions */
+@import "./utilities.css";
+
+/* 7. Custom project-specific styles */
+/* @import "./main.css"; */
+
+/* 8. Override project-specific styles */
+/* @import "./override.css"; */
+
+/* 9. Tailwind plugins (should be declared after imports) */
+@plugin "tailwindcss-debug-screens" {
+  classname: "debug-screens";
+  position: "bottom, left";
+  prefix: "screen: ";
+}
+
+@custom-variant dark (&:is(.dark *));

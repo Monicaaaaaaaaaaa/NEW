@@ -1,0 +1,29 @@
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    /* @apply font-sans; */
+  }
+
+    input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear {
+        display: none;
+    }
+
+    /* Hide Chrome / Edge (newer autofill + reveal UI) */
+    input[type="password"]::-webkit-textfield-decoration-container {
+        display: none !important;
+    }
+
+    input[type="password"]::-webkit-credentials-auto-fill-button,
+    input[type="password"]::-webkit-password-toggle-button {
+        display: none !important;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}

@@ -241,9 +241,16 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold text-blue-600">NRS Invoice Dashboard</h1>
             <p className="text-sm text-gray-900 mt-1">Manage your NRS e-invoicing compliance</p>
           </div>
-          <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium">
-            <Plus size={16} /> Create Invoice
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+            onClick={() => router.push("/users")}
+            className="flex items-center gap-2 border border-blue-600 text-blue-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-50">
+              <Users size={16} /> Users
+            </button>
+            <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium">
+              <Plus size={16} /> Create Invoice
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-4 gap-6 mb-8">

@@ -218,7 +218,7 @@ export default function DashboardPage() {
       router.push("/login");
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-gray-200 border-b border-gray-200 px-8 py-2 flex items-center justify-between">
@@ -265,7 +265,7 @@ export default function DashboardPage() {
             <Button
               title="Create Invoice"
               icon={Plus}
-              variant="danger"
+              variant="primary"
               type="button"
               onClick={() => {}}
               rounded="lg"

@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button_2";
+import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "@/icons";
 import axios from "axios";
@@ -24,31 +24,23 @@ export default function LoginForm() {
     formState: { errors, isSubmitting, isValid },
   } = useForm<LoginFormValues>({
     mode: "onChange",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
   });
 
   const router = useRouter();
 
   const onSubmit = async (data: LoginFormValues) => {
     if (loading) return;
-
     setLoading(true);
-
     try {
       const { data: result } = await HTTP.post("/auth/login", {
         email: data.email,
         password: data.password,
       });
-
       localStorage.setItem("token", result.data.token);
       localStorage.setItem("refreshToken", result.data.refreshToken);
-      console.log("Login successful:", result);
       router.push("/dashboard");
     } catch (error) {
-      console.error("Login error:", error);
       const message = axios.isAxiosError(error)
         ? error.response?.data?.message || error.message
         : "An unexpected error occurred";
@@ -86,26 +78,18 @@ export default function LoginForm() {
         type="email"
         placeholder="Enter email address"
         className={`rounded-lg px-4 py-3 mb-1 text-sm outline-none ${
-          errors.email
-            ? "border-red-500"
-            : "border-gray-300 focus:border-blue-500"
+          errors.email ? "border-red-500" : "border-gray-300 focus:border-blue-500"
         }`}
         {...register("email", {
           required: "Email is required",
-          pattern: {
-            value: /\S+@\S+\.\S+/,
-            message: "Enter a valid email address",
-          },
+          pattern: { value: /\S+@\S+\.\S+/, message: "Enter a valid email address" },
         })}
       />
       {errors.email && (
         <p className="text-red-500 text-xs mb-3">{errors.email.message}</p>
       )}
 
-      <label
-        htmlFor="password"
-        className="text-sm font-medium text-gray-700 mb-1"
-      >
+      <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1">
         Password
       </label>
       <div className="relative mb-1">
@@ -115,16 +99,11 @@ export default function LoginForm() {
           placeholder="Enter Password"
           autoComplete="current-password"
           className={`rounded-lg pl-4 pr-10 py-3 w-full text-sm outline-none ${
-            errors.password
-              ? "border-red-500"
-              : "border-gray-300 focus:border-blue-500"
+            errors.password ? "border-red-500" : "border-gray-300 focus:border-blue-500"
           }`}
           {...register("password", {
             required: "Password is required",
-            minLength: {
-              value: 6,
-              message: "Password must be at least 6 characters",
-            },
+            minLength: { value: 6, message: "Password must be at least 6 characters" },
           })}
         />
         <button
@@ -148,29 +127,15 @@ export default function LoginForm() {
 
       <Button
         type="submit"
-        disabled={!isValid || isSubmitting}
-        className="w-full"
-      >
-        {isSubmitting ? (
-          <span className="flex items-center justify-center gap-2">
-            <svg
-              className="animate-spin"
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-            </svg>
-            Signing in...
-          </span>
-        ) : (
-          "Sign In"
-        )}
-      </Button>
+        title="Sign In"
+        variant="primary"
+        size="lg"
+        rounded="lg"
+        fullWidth
+        isLoading={isSubmitting || loading}
+        loadingText="Signing in..."
+        disabled={!isValid}
+      />
     </form>
   );
 }

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { LucideIcon, Loader2 } from "lucide-react";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, CSSProperties } from "react";
 
 const contentStyle = {
   base: "inline-flex items-center justify-center gap-2 font-medium text-sm transition-all disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap",
@@ -8,6 +8,7 @@ const contentStyle = {
     primary: "bg-primary text-white hover:opacity-90",
     danger: "bg-danger text-white hover:opacity-90",
     secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
+    gradient: "text-white hover:opacity-90",
     ghost: "bg-transparent text-gray-700 hover:bg-gray-100",
     "outline-primary": "border border-primary bg-white text-primary hover:bg-primary/5",
     "outline-danger": "border border-danger bg-white text-danger hover:bg-danger/5",
@@ -29,6 +30,8 @@ const contentStyle = {
     full: "rounded-full",
   },
 };
+
+const GRADIENT = "linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%)";
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   title?: string;
@@ -56,14 +59,19 @@ export default function Button({
   className = "",
   children,
   disabled,
+  style,
   ...props
 }: IButton) {
   const Icon = icon;
   const isDisabled = disabled || isLoading;
 
+  const gradientStyle: CSSProperties =
+    variant === "gradient" ? { background: GRADIENT } : {};
+
   return (
     <button
       disabled={isDisabled}
+      style={{ ...gradientStyle, ...style }}
       className={cn(
         contentStyle.base,
         contentStyle.variant[variant],

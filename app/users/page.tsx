@@ -293,7 +293,7 @@ export default function UsersPage() {
             <Button
               title="Create Admin"
               icon={Plus}
-              variant="primary"
+              variant="gradient"
               rounded="full"
               size="md"
               onClick={() => setShowModal(true)}
@@ -503,7 +503,7 @@ export default function UsersPage() {
               />
               <Button
                 title="Create"
-                variant="primary"
+                variant="gradient"
                 size="lg"
                 rounded="lg"
                 fullWidth
